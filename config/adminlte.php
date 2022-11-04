@@ -318,6 +318,13 @@ return [
             'label'       => 4,
             'label_color' => 'success',
         ],
+        [
+            'text'        => 'score',
+            'url'         => 'admin/score',
+            'icon'        => 'far fa-fw fa-file',
+            'label'       => 9,
+            'label_color' => 'warning',
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
