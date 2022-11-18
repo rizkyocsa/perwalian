@@ -307,6 +307,12 @@ return [
             'text' => 'search',
         ],
         [
+            'text' => 'Buku',
+            'url'  => 'admin/books',
+            'icon' => 'far fa-fw fa-book',
+            'can'  => 'isAdmin',
+        ],
+        [
             'text' => 'blog',
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',

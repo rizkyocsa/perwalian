@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //Route::get('/home', function(){
 //    return view('home');
@@ -32,5 +32,14 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('admin/home', [App\Http\Controllers\AdminController::class, 'index'])
     ->name('admin.home')
+    ->middleware('is_admin');
+
+//Master BUKU
+Route::get('admin/books', [App\Http\Controllers\AdminController::class, 'books'])
+    ->name('admin.books')
+    ->middleware('is_admin');
+
+Route::post('admin/books', [App\Http\Controllers\AdminController::class, 'submit_book'])
+    ->name('admin.book.submit')
     ->middleware('is_admin');
 
