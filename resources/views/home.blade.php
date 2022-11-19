@@ -28,12 +28,12 @@
 
 @section('footer')
 
-@stop
+@endsection
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+    
+@endsection
 
 @section('js')
-    <script> console.log('Hi!')</script>
-@stop
+
+@endsection

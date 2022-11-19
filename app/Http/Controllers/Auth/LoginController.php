@@ -50,10 +50,14 @@ class LoginController extends Controller
         ]);
 
         if(auth()->attempt(array('email' => $input['email'],'password' => $input ['password']))){
-            if (auth()->user()->roles_id == 1){
-                return redirect()->route('admin.home');
+            $notification = array(
+                'message' => 'Signed in successfully',
+                'alert-type' => 'success'
+            );
+            if (auth()->user()->roles_id == 1){                
+                return redirect()->route('admin.home')->with($notification);
             }else{
-                return redirect()->route('home');
+                return redirect()->route('home')->with($notification);
             }
         }else{
             return redirect()->route('login')->with('email','Email-Address And Password Are Wrong.');

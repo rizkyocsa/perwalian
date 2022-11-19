@@ -106,13 +106,13 @@
 
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
-
     <script>
+        //Sweet Alert
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 300,
+            timer: 3000,
         })
 
         @if(Session::has('message'))
@@ -121,31 +121,31 @@
             switch (type){
                 case 'info':
                     Toast.fire({
-                        type: 'info',
+                        icon: 'info',
                         title: "{{Session::get('message')}}"
                     })
                     break;
                 case 'success':
                     Toast.fire({
-                        type: 'success',
+                        icon: 'success',
                         title: "{{Session::get('message')}}"
                     })
                     break;
                 case 'warning':
                     Toast.fire({
-                        type: 'warning',
+                        icon: 'warning',
                         title: "{{Session::get('message')}}"
                     })
                     break;
                 case 'error':
                     Toast.fire({
-                        type: 'error',
+                        icon: 'error',
                         title: "{{Session::get('message')}}"
                     })
                     break;
                 case 'dialog_error':
                     Swal.fire({
-                        type: 'error',
+                        icon: 'error',
                         title: "Ooops",
                         text: "{{Session::get('message')}}",
                         timer: 3000
@@ -155,7 +155,7 @@
         @endif
 
         @if($errors->any())
-            @foreach(errors->all() as $error)
+            @foreach($errors->all() as $error)
                 Swal.fire({
                     type: 'error',
                     title: "Ooops",
@@ -176,8 +176,7 @@
 
         let baseurl = "<?=url('/')?>";
         let fullRL = "<?=url()->full()?>";
-    </script>
-
+</script>
 </body>
 
 </html>
