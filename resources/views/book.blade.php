@@ -12,6 +12,7 @@
             <div class="card-header">{{ __('Pengelolaan Buku')}}</div>
             <div class="card-body">
                 <button class="btn btn-primary" data-toggle="modal" data-target="#tambahBukuModal"><i class="fa fa-plus"></i>Tambah Data</button>
+                <a href="{{ route('admin.print.books')}}" class="btn btn-secondary" target="_blank"><i class="fa fa-print"></i>Cetak PDF</a>
                 <hr>
                 <table id="table-data" class="table table-bordered">
                     <thead>

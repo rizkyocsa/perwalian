@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 use App\Models\Book;
+use PDF;
 
 class AdminController extends Controller
 {
@@ -121,5 +122,12 @@ class AdminController extends Controller
             'success' => $success,
             'message' => $message,
         ]);
+    }
+
+    public  function print_books(){
+        $books = Book::all();
+
+        $pdf = PDF::loadview('print_books',['books'=>$books]);
+        return $pdf->download('data_buku.pdf');
     }
 }
