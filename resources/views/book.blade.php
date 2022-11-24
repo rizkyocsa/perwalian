@@ -13,6 +13,10 @@
             <div class="card-body">
                 <button class="btn btn-primary" data-toggle="modal" data-target="#tambahBukuModal"><i class="fa fa-plus"></i>Tambah Data</button>
                 <a href="{{ route('admin.print.books')}}" class="btn btn-secondary" target="_blank"><i class="fa fa-print"></i>Cetak PDF</a>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a href="{{ route('admin.book.export')}}" class="btn btn-info" targe="_blank">Export</a>
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#importDataModal">Import</button>
+                </div>
                 <hr>
                 <table id="table-data" class="table table-bordered">
                     <thead>
@@ -149,6 +153,35 @@
                             <input type="hidden" name="old_cover" id="edit-old-cover">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                             <button type="submit" class="btn btn-primary">Kirim</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Import Data Buku -->
+    <div class="modal fade" id="importDataModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Import Data
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('admin.book.import')}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                            <div class="form-group">
+                                <label for="cover">Upload File</label>
+                                <input type="file" name="file" class="form-control"/>
+                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary">Import Data</button>
                         </div>
                     </form>
                 </div>
