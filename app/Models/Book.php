@@ -13,7 +13,8 @@ class Book extends Model
         'judul',
         'penulis',
         'tahun',
-        'penerbit'
+        'penerbit',
+        'cover',
     ];
 
     public static function getDataBooks(){
@@ -28,6 +29,7 @@ class Book extends Model
             $books_filter[$i]['penulis'] = $books[$i]->penulis;
             $books_filter[$i]['tahun'] = $books[$i]->tahun;
             $books_filter[$i]['penerbit'] = $books[$i]->penerbit;
+            $books_filter[$i]['cover'] = $books[$i]->cover;
         }
 
         return $books_filter;
