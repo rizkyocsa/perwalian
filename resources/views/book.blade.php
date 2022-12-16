@@ -175,10 +175,10 @@
                 <div class="modal-body">
                     <form action="{{ route('admin.book.import')}}" method="post" enctype="multipart/form-data">
                         @csrf
-                            <div class="form-group">
-                                <label for="cover">Upload File</label>
-                                <input type="file" name="file" class="form-control"/>
-                            </div>
+                        <div class="form-group">
+                            <label for="cover">Upload File</label>
+                            <input type="file" name="file" class="form-control"/>
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                             <button type="submit" class="btn btn-primary">Import Data</button>
