@@ -47,7 +47,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <div class="btn-group mx-auto d-block" role="group" aria-label="Basic example">
+                                    <div class="btn-group" role="group" aria-label="Basic example">
                                         <button type="button" id="btn-edit-buku" class="btn btn-success" data-toggle="modal" data-target="#editBukuModal" data-id="{{ $book->id }}">Edit</button>
                                         <button class="btn btn-danger" onclick="deleteConfirmation('{{$book->id}}', '{{$book->judul}}')">Hapus</button>
                                     </div>
