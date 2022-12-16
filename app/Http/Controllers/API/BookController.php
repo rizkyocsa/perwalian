@@ -23,7 +23,7 @@ class BookController extends Controller
             ], 401);
         }
     }
-
+    
     public function create(Request $req){
         $validate = $req->validate([
             'judul' => 'required|max:255',
@@ -70,10 +70,10 @@ class BookController extends Controller
             $req->file('cover')->storeAs(
                 'public/cover_buku', $filename
             );
-
+            
             $validate['cover'] = $filename;
         }
-        
+
         $book = Book::find($id);
         Storage::delete('public/cover_buku/'. $book->cover);
         $book->update($validate);
@@ -88,8 +88,8 @@ class BookController extends Controller
         $book = Book::find($id);
 
         Storage::delete('public/cover_buku/'. $book->cover);
-
-        $book->delete();
+    
+        $book->delete();    
 
         return response()->json([
             'message' => 'Buku berhasil dihapus',
