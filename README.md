@@ -8,8 +8,8 @@
 7. php artisan db:seed --class=CreateUsersSeeder
 
 ## Profil
-Name : Rizky
-NPM : 5520120063
+- Name : Rizky
+- NPM : 5520120063
 
 ## Feature
 1. Login as Admin or User
