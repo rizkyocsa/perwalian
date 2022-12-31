@@ -31,11 +31,12 @@ class AdminController extends Controller
     }
 
     public function submit_book(Request $req){
-        $validate = $req->validate=([
+        $validate = $req->validate([
             'judul' => 'required|max:255',
-            'penulis' => 'required',
-            'tahun' => 'required',
-            'penerbit' => 'required',
+            'penulis' => 'required|max:255',
+            'tahun' => 'required|max:255',
+            'penerbit' => 'required|max:255',
+            'cover' => 'required|image|mimes:jpeg,jpg|max:2048',
         ]);
 
         $book = new Book;
@@ -70,11 +71,12 @@ class AdminController extends Controller
     public function update_book(Request $req){
         $book = Book::find($req->get('id'));
 
-        $validate = $req->validate=([
+        $validate = $req->validate([
             'judul' => 'required|max:255',
             'penulis' => 'required',
             'tahun' => 'required',
             'penerbit' => 'required',
+            'cover' => 'required|image|mimes:jpeg,jpg|max:2048',
         ]);
 
         $book->judul = $req->get('judul');

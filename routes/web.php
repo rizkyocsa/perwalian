@@ -36,6 +36,9 @@ Route::get('admin/home', [App\Http\Controllers\AdminController::class, 'index'])
     ->name('admin.home')
     ->middleware('is_admin');
 
+//View Buku User
+Route::get('books', [App\Http\Controllers\AdminController::class, 'books']);
+
 //Master BUKU
 Route::get('admin/books', [App\Http\Controllers\AdminController::class, 'books'])
     ->name('admin.books')

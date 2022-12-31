@@ -9,8 +9,13 @@
 @section('content')
     <div class="container-fluid">
         <div class="card card-default">
-            <div class="card-header">{{ __('Pengelolaan Buku')}}</div>
+            @if($user->roles_id == 1)
+                <div class="card-header">{{ __('Pengelolaan Buku')}}</div>
+            @else
+                <div class="card-header">{{ __('Data Buku')}}</div>
+            @endif
             <div class="card-body">
+                 @if($user->roles_id == 1)
                 <button class="btn btn-primary" data-toggle="modal" data-target="#tambahBukuModal"><i class="fa fa-plus"></i>Tambah Data</button>
                 <a href="{{ route('admin.print.books')}}" class="btn btn-secondary" target="_blank"><i class="fa fa-print"></i>Cetak PDF</a>
                 <div class="btn-group" role="group" aria-label="Basic example">
@@ -18,6 +23,7 @@
                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#importDataModal">Import</button>
                 </div>
                 <hr>
+                @endif
                 <table id="table-data" class="table table-bordered">
                     <thead>
                         <tr class="text-center">
@@ -27,7 +33,9 @@
                             <th>TAHUN</th>
                             <th>PENERBIT</th>
                             <th>COVER</th>
+                            @if($user->roles_id == 1)
                             <th>AKSI</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -46,12 +54,14 @@
                                         [Gambar tidak tersedia]
                                     @endif
                                 </td>
+                                @if($user->roles_id == 1)
                                 <td>
                                     <div class="btn-group mx-auto d-block" role="group" aria-label="Basic example">
                                         <button type="button" id="btn-edit-buku" class="btn btn-success" data-toggle="modal" data-target="#editBukuModal" data-id="{{ $book->id }}">Edit</button>
                                         <button class="btn btn-danger" onclick="deleteConfirmation('{{$book->id}}', '{{$book->judul}}')">Hapus</button>
                                     </div>
                                 </td>
+                                @endif  
                             </tr>
                         @endforeach
                     </tbody>
@@ -94,6 +104,7 @@
                             <div class="form-group">
                                 <label for="cover">Cover</label>
                                 <input type="file" name="cover" id="cover" class="form-control" required/>
+                                {!!$errors->first('image', '<span class="text-danger">:message</span>')!!}
                             </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -145,6 +156,7 @@
                                 <div class="form-group">
                                     <label for="edit-cover">Cover</label>
                                     <input type="file" name="cover" id="edit-cover" class="form-control" required/>
+                                    {!!$errors->first('cover', '<span class="text-danger">:message</span>')!!}
                                 </div>
                             </div>
                         </div>                        
