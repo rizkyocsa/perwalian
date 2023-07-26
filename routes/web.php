@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('landing');
 });
 
 Auth::routes();
@@ -72,5 +72,58 @@ Route::post('admin/books/import', [App\Http\Controllers\AdminController::class, 
     ->name('admin.book.import')
     ->middleware('is_admin');
 
+//Master Penasi (User)
+Route::get('penasi', [App\Http\Controllers\PenasiController::class, 'penasi'])
+    ->name('penasi');
+
+Route::post('penasi', [App\Http\Controllers\PenasiController::class, 'submit_penasi'])
+    ->name('penasi.submit');
+
+Route::get('penasi/check', [App\Http\Controllers\PenasiController::class, 'check_penasi'])
+    ->name('check.penasi');
+
+Route::patch('penasi/update', [App\Http\Controllers\PenasiController::class, 'update_penasi'])
+    ->name('penasi.update');
+
+Route::patch('penasi/delete', [App\Http\Controllers\PenasiController::class, 'delete_penasi'])
+    ->name('penasi.delete');
+
+Route::get('ajaxadmin/dataPenasi/{id}', [App\Http\Controllers\PenasiController::class, 'getDataPenasi']);
 
 
+//Master User
+Route::get('admin/user', [App\Http\Controllers\UsersController::class, 'user'])
+    ->name('admin.user')
+    ->middleware('is_admin');
+
+Route::post('admin/user', [App\Http\Controllers\UsersController::class, 'submit_user'])
+    ->name('admin.user.submit')
+    ->middleware('is_admin');
+
+Route::get('admin/ajaxadmin/dataUser/{id}', [App\Http\Controllers\UsersController::class, 'getDataPengguna'])
+    ->middleware('is_admin');
+
+Route::patch('admin/user/update', [App\Http\Controllers\UsersController::class, 'update_user'])
+    ->name('admin.user.update')
+    ->middleware('is_admin');
+
+Route::delete('admin/user/delete/{id}', [App\Http\Controllers\AdminController::class, 'delete_book'])
+    ->name('admin.user.delete')
+    ->middleware('is_admin');
+
+//Master Admin Penasi
+Route::get('admin/penasi', [App\Http\Controllers\PenasiController::class, 'index'])
+    ->name('admin.penasi')
+    ->middleware('is_admin');
+
+Route::get('admin/ajaxadmin/dataPenasi/{id}', [App\Http\Controllers\PenasiController::class, 'getDataPenasi'])
+    ->middleware('is_admin');
+
+Route::patch('admin.penasi/update', [App\Http\Controllers\PenasiController::class, 'tanggapi_penasi'])
+    ->name('admin.penasi.update')
+    ->middleware('is_admin');
+
+//Laporan
+Route::get('admin/laporan', [App\Http\Controllers\PenasiController::class, 'laporan'])
+    ->name('admin.laporan')
+    ->middleware('is_admin');

@@ -19,14 +19,14 @@ class CreateUsersSeeder extends Seeder
                 'name' => 'isUser',
                 'username' => 'isUser',
                 'email' => 'user@mail.com',
-                'password' => bcrypt('12345'),
+                'password' => bcrypt('12345678'),
                 'roles_id' => 2
             ],
             [
                 'name' => 'isAdmin',
                 'username' => 'isAdmin',
                 'email' => 'admin@mail.com',
-                'password' => bcrypt('12345'),
+                'password' => bcrypt('12345678'),
                 'roles_id' => 1
             ]
         ];

@@ -12,11 +12,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "jeroennoten/laravel-adminlte": "^3.8",
         "laravel/framework": "^8.75",
-<<<<<<< HEAD
         "laravel/sanctum": "^2.15",
-=======
-        "laravel/sanctum": "*",
->>>>>>> 4b29d9d9c7bcde19fabd7288c666d15fdeb75bed
         "laravel/tinker": "^2.5",
         "laravel/ui": "*",
         "maatwebsite/excel": "^3.1"
