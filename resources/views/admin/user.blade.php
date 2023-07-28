@@ -12,6 +12,7 @@
                 <div class="card-header">{{ __('Pengelolaan Siswa')}}</div>
             <div class="card-body">
                 <button class="btn btn-primary" data-toggle="modal" data-target="#tambahUserModal"><i class="fa fa-plus"></i>Tambah Data</button>                
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#importDataModal">Import</button>
                 <hr>
                 <table id="table-data" class="table table-bordered">
                     <thead>
@@ -116,9 +117,38 @@
                                 <input type="text" name="deskripsi" id="deskripsi" class="form-control" required/>
                             </div> -->                      
                         <div class="modal-footer">
-                            <input type="hidden" value="{{ $data->id }}" name="id" id="edit-id">
+                            <input type="hidden" name="id" id="edit-id" >
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                             <button type="submit" class="btn btn-primary">Kirim</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Import Data User -->
+    <div class="modal fade" id="importDataModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Import Data
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('admin.user.import')}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group">
+                            <label for="cover">Upload File</label>
+                            <input type="file" name="file" class="form-control"/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary">Import Data</button>
                         </div>
                     </form>
                 </div>
@@ -137,13 +167,14 @@
     $(function(){
         $(document).on('click','#btn-edit-user', function(){
             let id = $(this).data('id');
-            alert(id);
+            // alert(id);
             $.ajax({
                 type: "get",
                 url: "{{url('admin/ajaxadmin/dataUser')}}/"+id,
                 dataType: 'json',
                 success: function(res){
                     // console.log(res);
+                    $('#edit-id').val(res.id);
                     $('#edit-name').val(res.name);
                     $('#edit-username').val(res.username);
                     $('#edit-email').val(res.email);

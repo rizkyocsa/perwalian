@@ -11,6 +11,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\BooksExport;
 use App\Imports\BooksImport;
 use App\Models\Book;
+use App\Models\Penasi;
+use App\Models\User;
 use PDF;
 
 class AdminController extends Controller
@@ -21,7 +23,13 @@ class AdminController extends Controller
 
     public function index(){
         $user = Auth::user();
-        return view('home', compact('user'));
+        $users = User::All()->count();
+        $proses = Penasi::All()->where('status', 'Proses')->count();
+        $selesai = Penasi::All()->where('status', 'Selesai')->count();
+        $ditolak = Penasi::All()->where('status', 'Ditolak')->count();
+        $pengaduan = Penasi::All()->where('jenis', 'Pengaduan')->count();
+        $aspirasi = Penasi::All()->where('jenis', 'Aspirasi')->count();
+        return view('home', compact('user', 'users', 'proses','selesai','ditolak','pengaduan','aspirasi'));
     }
 
     public function books(){

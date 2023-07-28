@@ -12,7 +12,10 @@
                 <div class="card-header">{{ __('Laporan')}}</div>
             <div class="card-body">
                 <!-- <button class="btn btn-primary" data-toggle="modal" data-target="#tambahUserModal"><i class="fa fa-plus"></i>Tambah Data</button>                 -->
-                <!-- <hr> -->
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href="{{ route('admin.laporan.print')}}" class="btn btn-secondary" target="_blank"><i class="fa fa-print"></i>Cetak PDF Penasi</a>    
+                    </div>
+                <hr>
                 <table id="table-data" class="table table-bordered">
                     <thead>
                         <tr class="text-center">

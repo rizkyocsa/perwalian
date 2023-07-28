@@ -4,8 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\User;
+use App\Imports\UsersImport;
+
 class UsersController extends Controller
 {
     public function user()
@@ -41,7 +46,7 @@ class UsersController extends Controller
         return redirect()->route('admin.user')->with($notification);
     }
 
-    public function getDataPengguna($id)
+    public function getDataUser($id)
     {
         $user = User::find($id);
 
@@ -49,20 +54,15 @@ class UsersController extends Controller
     }
 
     public function update_user(Request $req){
-        $user = User::find($req->get('id'));
-        // $user = User::All();
+        $id = $req->get('id');
 
-        // dd($user);
+        $user = User::All()->where('id', $id)->first();
 
         $validate = $req->validate([
             'name' => 'required',
-            // 'username' => 'required',
-            // 'email' => 'required',
         ]);
 
         $user->name = $req->get('name');
-        // $user->username = $req->get('username');
-        // $user->email = $req->get('email');
 
         $user->save();
 
@@ -87,4 +87,52 @@ class UsersController extends Controller
             'message' => $message,
         ]);
     }
+
+    public function change(Request $req){
+        $user = Auth::user();
+        return view('change', compact('user'));
+    }
+
+    public function change_password(Request $req){
+        $id = $req->get('username');
+        
+        $user = User::All()->where('username', $id)->first();
+
+        $validate = $req->validate([
+            'password' => 'required',
+        ]);
+
+        $user->password = Hash::make($req->get('password'));
+
+        $user->save();
+
+        $notification = array(
+            'message' =>'Ganti Password berhasil', 
+            'alert-type' =>'success'
+        );
+
+        return redirect()->route('change')->with($notification);
+    }
+
+    public function import(Request $req){
+        Excel::import(new UsersImport, $req->file('file'));
+
+        $notification = array(
+            'message' => 'Import data berhasil',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('admin.user')->with($notification);
+    }
+
+    // public function import(Request $req){
+    //     Excel::import(new BooksImport, $req->file('file'));
+
+    //     $notification = array(
+    //         'message' => 'Import data berhasil',
+    //         'alert-type' => 'success'
+    //     );
+
+    //     return redirect()->route('admin.books')->with($notification);
+    // }
 }

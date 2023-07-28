@@ -81,7 +81,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="jenis">Silahkan Pilih Jenis</label>
-                                    <select class="custom-select jenis" id="edit-jenis" name="edit-jenis">
+                                    <select class="custom-select jenis" name="jenis" id="edit-jenis" >
                                         <option value="">--Jenis--</option>
                                         <option value="Pengaduan">Pengaduan</option>
                                         <option value="Aspirasi">Aspirasi</option>
@@ -89,11 +89,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="deskripsi">Deskripsi</label>
-                                    <input type="text" name="edit-deskripsi" id="edit-deskripsi" class="form-control" required/>
+                                    <input type="text" name="deskripsi" id="edit-deskripsi" class="form-control" required/>
                                 </div>
                                 <div class="form-group">
                                     <label for="kategori">Silahkan Pilih Kategori</label>
-                                    <select class="custom-select" id="edit-kategori" name="kategori">
+                                    <select class="custom-select" name="kategori" id="edit-kategori" >
                                         <option value="">--Kategori--</option>
                                         <option value="Psikologi" > Psikologi </option>
                                         <option value="Kekerasan" > Kekerasan </option>
@@ -101,11 +101,12 @@
                                         <option value="Saran dan Prasana" > Saran dan Prasana </option>
                                     </select>
                                 </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group" id="image-area"></div>
                                 <div class="form-group">
                                     <label for="edit-berkasPendukung">Cover</label>
-                                    <input type="file" name="cover" id="edit-berkasPendukung" class="form-control" required/>
+                                    <input type="file" name="berkasPendukung" id="edit-berkasPendukung" class="form-control" required/>
                                     {!!$errors->first('berkasPendukung', '<span class="text-danger">:message</span>')!!}
                                 </div>
                             </div>
@@ -196,7 +197,7 @@
                 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
                 $.ajax({
-                    type: 'POST',
+                    type: "get",
                     url: "delete/" + id,
                     data: {_token: CSRF_TOKEN},
                     dataType: 'json',

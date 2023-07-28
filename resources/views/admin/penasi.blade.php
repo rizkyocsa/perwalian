@@ -46,7 +46,10 @@
                                 <td>{{$data->pengirim}}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <button type="button" id="btn-tanggapi" class="btn btn-success" data-toggle="modal" data-target="#tanggapiModal" data-id="{{ $data->id }}">Tanggapi</button>
+                                        <button type="button" id="btn-tanggapi" class="btn btn-success" data-toggle="modal" data-target="#tanggapiModal" data-id="{{ $data->id }}"
+                                        {{ $data->status == "Proses" ? '' : 'disabled' }}>
+                                        Tanggapi
+                                    </button>
                                     </div>
                                 </td>
                             </tr>
@@ -100,6 +103,14 @@
                             </div>
                             <div class="col-md-6">
                             <div class="form-group">
+                                    <label for="jenis">Silahkan Pilih Tanggapan</label>
+                                    <select class="custom-select" name="status" id="edit-status">
+                                        <option value="Proses">--Tanggapan--</option>
+                                        <option value="Selesai">Diterima</option>
+                                        <option value="Ditolak">Ditolak</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label for="deskripsi">Tanggapan</label>
                                     <textarea cols="30" rows="10"
                                     type="text" name="tanggapan" id="edit-tanggapan" class="form-control" required/></textarea>
@@ -132,56 +143,57 @@
 <script>
     
     $('.jenis').change(function() {
-            var id = $(this).val();
-            alert(id); 
-            var kategori= document.getElementById('edit-kategori');
-            if(id == "Pengaduan")
-            {
-                $(kategori).empty();
-                $(kategori).append('<option value="Psikologi" > Psikologi </option>');
-                $(kategori).append('<option value="Kekerasan" > Kekerasan </option>');
-                $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
-                $(kategori).append('<option value="Saran dan Prasana" > Saran dan Prasana </option>');
-            }else if(id == "Aspirasi"){
-                $(kategori).empty();
-                $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
-                $(kategori).append('<option value="Saran dan Prasana" > Saran dan Prasana </option>');
-            }else{
-                $(kategori).empty();
-                $(kategori).append('<option value="" > --Kategori-- </option>');
-            }
-        });
+        var id = $(this).val();
+        alert(id); 
+        var kategori= document.getElementById('edit-kategori');
+        if(id == "Pengaduan")
+        {
+            $(kategori).empty();
+            $(kategori).append('<option value="Psikologi" > Psikologi </option>');
+            $(kategori).append('<option value="Kekerasan" > Kekerasan </option>');
+            $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
+            $(kategori).append('<option value="Saran dan Prasana" > Saran dan Prasana </option>');
+        }else if(id == "Aspirasi"){
+            $(kategori).empty();
+            $(kategori).append('<option value="Kegiatan Belajar Mengajar (KBM)" > Kegiatan Belajar Mengajar (KBM) </option>');
+            $(kategori).append('<option value="Saran dan Prasana" > Saran dan Prasana </option>');
+        }else{
+            $(kategori).empty();
+            $(kategori).append('<option value="" > --Kategori-- </option>');
+        }
+    });
 
-        //Modal Edit
-        $(function(){
-            $(document).on('click','#btn-tanggapi', function(){
-                let id = $(this).data('id');
-                // alert(id);
-                $('#image-area').empty();
-                $.ajax({
-                    type: "get",
-                    url: "{{url('ajaxadmin/dataPenasi')}}/"+id,
-                    dataType: 'json',
-                    success: function(res){
-                        console.log(res);
-                        console.log(res.jenis);
-                        // $('#edit-name').val(res.name);
-                        $('#edit-jenis option[value="'+res.jenis+'"]').attr("selected", "selected");
-                        $('#edit-deskripsi').val(res.deskripsi);
-                        $('#edit-kategori option[value="'+res.kategori+'"]').attr("selected", "selected");
-                        // $('#edit-kategori').val(res.kategori);
-                        $('#edit-id').val(res.id);
-                        $('#old-berkasPendukung').val(res.berkasPendukung);
-                        if(res.cover !== null){
-                            $('#image-area').append(
-                                "<img src='"+baseurl+"/storage/berkasPendukung/"+res.berkasPendukung+"' width='200px'>"
-                            );
-                        }else{
-                            $('#image-area').append('[Gambar tidak tersedia]');
-                        }
-                    },
-                });
+    //Modal Edit
+    $(function(){
+        $(document).on('click','#btn-tanggapi', function(){
+            let id = $(this).data('id');
+            // alert(id);
+            $('#image-area').empty();
+            $.ajax({
+                type: "get",
+                url: "{{url('ajaxadmin/dataPenasi')}}/"+id,
+                dataType: 'json',
+                success: function(res){
+                    console.log(res);
+                    console.log(res.jenis);
+                    // $('#edit-name').val(res.name);
+                    $('#edit-jenis option[value="'+res.jenis+'"]').attr("selected", "selected");
+                    $('#edit-deskripsi').val(res.deskripsi);
+                    $('#edit-kategori option[value="'+res.kategori+'"]').attr("selected", "selected");
+                    $('#edit-status option[value="'+res.status+'"]').attr("selected", "selected");
+                    // $('#edit-kategori').val(res.kategori);
+                    $('#edit-id').val(res.id);
+                    $('#old-berkasPendukung').val(res.berkasPendukung);
+                    if(res.cover !== null){
+                        $('#image-area').append(
+                            "<img src='"+baseurl+"/storage/berkasPendukung/"+res.berkasPendukung+"' width='200px'>"
+                        );
+                    }else{
+                        $('#image-area').append('[Gambar tidak tersedia]');
+                    }
+                },
             });
         });
+    });
 </script>
 @endsection

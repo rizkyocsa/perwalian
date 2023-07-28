@@ -8,6 +8,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 
 use App\Models\Penasi;
+use PDF;
 
 class PenasiController extends Controller
 {
@@ -85,6 +86,8 @@ class PenasiController extends Controller
     public function update_penasi(Request $req){
         $penasi = Penasi::find($req->get('id'));
 
+        // dd($penasi);
+
         $validate = $req->validate([
             'jenis' => 'required',
             'deskripsi' => 'required',
@@ -92,18 +95,18 @@ class PenasiController extends Controller
             'berkasPendukung' => 'required',
         ]);
 
-        $penasi->judul = $req->get('judul');
-        $penasi->penulis = $req->get('penulis');
-        $penasi->tahun = $req->get('tahun');
-        $penasi->penerbit = $req->get('penerbit');
+        $penasi->jenis = $req->get('jenis');
+        $penasi->deskripsi = $req->get('deskripsi');
+        $penasi->kategori = $req->get('kategori');
+        $penasi->berkasPendukung = $req->get('berkasPendukung');
 
-        if($req->hasFile('cover')){
+        if($req->hasFile('berkasPendukung')){
             $extension = $req->file('berkasPendukung')->extension();
 
             $filename = 'berkasPendukung'.time().'.'.$extension;
 
             $req->file('berkasPendukung')->storeAs(
-                'public/cover_buku', $filename
+                'public/berkasPendukung', $filename
             );
 
             Storage::delete('public/berkasPendukung/'.$req->get('old-berkasPendukung'));
@@ -117,39 +120,19 @@ class PenasiController extends Controller
             'alert-type' => 'success'
         );
 
-        return redirect()->route('penasi')->with($notification);
+        return redirect()->route('check.penasi')->with($notification);
     }
 
     public function tanggapi_penasi(Request $req){
         $penasi = Penasi::find($req->get('id'));
 
         $validate = $req->validate([
-            // 'jenis' => 'required',
-            // 'deskripsi' => 'required',
-            // 'kategori' => 'required',
-            // 'berkasPendukung' => 'required',
             'tanggapan' => 'required',
+            'status' => 'required',
         ]);
 
-        // $penasi->judul = $req->get('judul');
-        // $penasi->penulis = $req->get('penulis');
-        // $penasi->tahun = $req->get('tahun');
-        // $penasi->penerbit = $req->get('penerbit');
         $penasi->tanggapan = $req->get('tanggapan');
-        $penasi->status = "Selesai";
-
-        // if($req->hasFile('cover')){
-        //     $extension = $req->file('berkasPendukung')->extension();
-
-        //     $filename = 'berkasPendukung'.time().'.'.$extension;
-
-        //     $req->file('berkasPendukung')->storeAs(
-        //         'public/cover_buku', $filename
-        //     );
-
-        //     Storage::delete('public/berkasPendukung/'.$req->get('old-berkasPendukung'));
-        //     $penasi->berkasPendukung = $filename;
-        // }
+        $penasi->status = $req->get('status');
 
         $penasi->save();
 
@@ -164,7 +147,7 @@ class PenasiController extends Controller
     public function delete_penasi($id){
         $penasi = Penasi::find($id);        
 
-        $user->delete();
+        $penasi->delete();
 
         $success = true;
         $message = "Data penasi berhasil dihapus";
@@ -173,5 +156,20 @@ class PenasiController extends Controller
             'success' => $success,
             'message' => $message,
         ]);
+    }
+
+    public function laporan_print(){
+        $penasis = Penasi::all();
+        set_time_limit(300);
+        // dd($penasi);
+        $pdf = PDF::loadview('print_laporan',['penasis'=>$penasis]);
+        return $pdf->download('data_penasi.pdf');
+    }
+
+    public  function print_books(){
+        $books = Book::all();
+        dd($books);
+        $pdf = PDF::loadview('print_books',['books'=>$books]);
+        return $pdf->download('data_buku.pdf');
     }
 }

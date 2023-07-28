@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'admin/home',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -346,6 +346,12 @@ return [
             'text' => 'Cek Penasi',
             'url'  => 'penasi/check',
             'icon' => 'fas fa-light fa-comments',
+            'can'  => 'isUser',
+        ],
+        [
+            'text' => 'Ganti Password',
+            'url'  => 'change',
+            'icon' => 'fas fa-light fa-lock',
             'can'  => 'isUser',
         ],
     ],

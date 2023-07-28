@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
+Route::get('/home', [App\Http\Controllers\AdminController::class, 'index'])
     ->name('home')
     ->middleware('auth');
 
@@ -85,11 +85,16 @@ Route::get('penasi/check', [App\Http\Controllers\PenasiController::class, 'check
 Route::patch('penasi/update', [App\Http\Controllers\PenasiController::class, 'update_penasi'])
     ->name('penasi.update');
 
-Route::patch('penasi/delete', [App\Http\Controllers\PenasiController::class, 'delete_penasi'])
+Route::get('penasi/delete/{id}', [App\Http\Controllers\PenasiController::class, 'delete_penasi'])
     ->name('penasi.delete');
 
 Route::get('ajaxadmin/dataPenasi/{id}', [App\Http\Controllers\PenasiController::class, 'getDataPenasi']);
 
+Route::get('change', [App\Http\Controllers\UsersController::class, 'change'])
+    ->name('change');
+
+    Route::post('change', [App\Http\Controllers\UsersController::class, 'change_password'])
+    ->name('change.password');
 
 //Master User
 Route::get('admin/user', [App\Http\Controllers\UsersController::class, 'user'])
@@ -100,15 +105,19 @@ Route::post('admin/user', [App\Http\Controllers\UsersController::class, 'submit_
     ->name('admin.user.submit')
     ->middleware('is_admin');
 
-Route::get('admin/ajaxadmin/dataUser/{id}', [App\Http\Controllers\UsersController::class, 'getDataPengguna'])
+Route::get('admin/ajaxadmin/dataUser/{id}', [App\Http\Controllers\UsersController::class, 'getDataUser'])
     ->middleware('is_admin');
 
 Route::patch('admin/user/update', [App\Http\Controllers\UsersController::class, 'update_user'])
     ->name('admin.user.update')
     ->middleware('is_admin');
 
-Route::delete('admin/user/delete/{id}', [App\Http\Controllers\AdminController::class, 'delete_book'])
+Route::delete('admin/user/delete/{id}', [App\Http\Controllers\UsersController::class, 'delete_user'])
     ->name('admin.user.delete')
+    ->middleware('is_admin');
+
+Route::post('admin/user/import', [App\Http\Controllers\UsersController::class, 'import'])
+    ->name('admin.user.import')
     ->middleware('is_admin');
 
 //Master Admin Penasi
@@ -126,4 +135,8 @@ Route::patch('admin.penasi/update', [App\Http\Controllers\PenasiController::clas
 //Laporan
 Route::get('admin/laporan', [App\Http\Controllers\PenasiController::class, 'laporan'])
     ->name('admin.laporan')
+    ->middleware('is_admin');
+    
+Route::get('admin/laporan/print', [App\Http\Controllers\PenasiController::class, 'laporan_print'])
+    ->name('admin.laporan.print')
     ->middleware('is_admin');
