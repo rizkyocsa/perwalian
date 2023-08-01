@@ -315,19 +315,19 @@ return [
         [
             'text' => 'Data Siswa',
             'url'  => 'admin/user',
-            'icon' => 'far fa-fw fa-book',
+            'icon' => 'far fa-fw fa-user',
             'can'  => 'isAdmin',
         ],
         [
             'text' => 'Data Penasi',
             'url'  => 'admin/penasi',
-            'icon' => 'far fa-fw fa-book',
+            'icon' => 'far fa-fw fa-folder',
             'can'  => 'isAdmin',
         ],
         [
             'text' => 'Laporan',
             'url'  => 'admin/laporan',
-            'icon' => 'far fa-fw fa-book',
+            'icon' => 'far fa-fw fa-file',
             'can'  => 'isAdmin',
         ],
         // [
@@ -352,7 +352,13 @@ return [
             'text' => 'Ganti Password',
             'url'  => 'change',
             'icon' => 'fas fa-light fa-lock',
-            'can'  => 'isUser',
+            'can'  => 'isUser', 
+        ],
+        [
+            'text' => 'Ganti Password',
+            'url'  => 'change',
+            'icon' => 'fas fa-light fa-lock',
+            'can'  => 'isAdmin', 
         ],
     ],
 
